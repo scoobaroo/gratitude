@@ -1,23 +1,33 @@
-//lets require/import the mongodb native drivers.
-var mongodb = require('mongodb');
+//Lets load the mongoose module in our program
+var mongoose = require('mongoose');
 
-//We need to work with "MongoClient" interface in order to connect to a mongodb server.
-var MongoClient = mongodb.MongoClient;
+//Lets connect to our database using the DB server URL.
+mongoose.connect('mongodb://localhost/gratitude');
 
-// Connection URL. This is where your mongodb server is running.
-var url = 'mongodb://localhost:3000/gratitude';
+/**
+ * Lets define our Model for User entity. This model represents a collection in the database.
+ * We define the possible schema of User document and data types of each field.
+ * */
+var User = mongoose.model('User', {name: String, roles: Array, age: Number});
 
-// Use connect method to connect to the Server
-MongoClient.connect(url, function (err, db) {
+/**
+ * Lets Use our Models
+ * */
+
+//Lets create a new user
+var user1 = new User({name: 'modulus admin', age: 42, roles: ['admin', 'moderator', 'user']});
+
+//Some modifications in user object
+user1.name = user1.name.toUpperCase();
+
+//Lets try to print and see it. You will see _id is assigned.
+console.log(user1);
+
+//Lets save it
+user1.save(function (err, userObj) {
   if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
+    console.log(err);
   } else {
-    //HURRAY!! We are connected. :)
-    console.log('Connection established to', url);
-
-    // do some work here with the database.
-
-    //Close connection
-    db.close();
+    console.log('saved successfully:', userObj);
   }
 });
