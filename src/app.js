@@ -8,7 +8,7 @@ var User = React.createClass({
   render() {
     return <div>
         <h1>City: {this.props.user.city} </h1>
-        <UserName name={this.props.user.name} />
+        <User name={this.props.user.name} />
       </div>;
   }
 });
@@ -28,4 +28,8 @@ ReactDOM.render(
 );
 
 var user = { name: 'John', city: 'San Francisco' };
-ReactDOM.render(<User user={user} />, app);
+
+ReactDOM.render(
+  <User user={user} />,
+   document.getElementById("app")
+ );
