@@ -47,28 +47,10 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
 	var app = document.getElementById("app");
+	var list = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/list.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	console.log("app.js loaded");
 
-	var User = React.createClass({
-	  displayName: "User",
-
-	  render() {
-	    return React.createElement(
-	      "div",
-	      null,
-	      React.createElement(
-	        "h1",
-	        null,
-	        "City: ",
-	        this.props.user.city,
-	        " "
-	      ),
-	      React.createElement(User, { name: this.props.user.name, city: this.props.user.city })
-	    );
-	  }
-	});
-	// tutorial1.js
 	var CommentBox = React.createClass({
 	  displayName: "CommentBox",
 
@@ -80,11 +62,10 @@
 	    );
 	  }
 	});
+
 	ReactDOM.render(React.createElement(CommentBox, null), document.getElementById('app'));
 
-	var user = { name: 'John', city: 'San Francisco' };
-
-	ReactDOM.render(React.createElement(User, { user: user }), app);
+	ReactDOM.render(React.createElement(Form, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */

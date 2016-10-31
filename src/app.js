@@ -1,18 +1,10 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 var app = document.getElementById("app");
+var list = require('./components/list.js');
 
 console.log("app.js loaded");
 
-var User = React.createClass({
-  render() {
-    return <div>
-        <h1>City: {this.props.user.city} </h1>
-        <User name={this.props.user.name} />
-      </div>;
-  }
-});
-// tutorial1.js
 var CommentBox = React.createClass({
   render: function() {
     return (
@@ -22,14 +14,13 @@ var CommentBox = React.createClass({
     );
   }
 });
+
 ReactDOM.render(
   <CommentBox />,
   document.getElementById('app')
 );
 
-var user = { name: 'John', city: 'San Francisco' };
-
 ReactDOM.render(
-  <User user={user} />,
-   document.getElementById("app")
- );
+  <Form />,
+  document.getElementById('app')
+);
