@@ -44,10 +44,10 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* jshint esversion: 6 */
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
 	var app = document.getElementById("app");
-	var list = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/list.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	console.log("app.js loaded");
 
@@ -58,14 +58,68 @@
 	    return React.createElement(
 	      "div",
 	      { className: "commentBox" },
-	      "Hello, world! I am a CommentBox."
+	      "Hello, world! I am a CommentBox.",
+	      React.createElement(Form, null)
 	    );
 	  }
 	});
 
-	ReactDOM.render(React.createElement(CommentBox, null), document.getElementById('app'));
+	class Form extends React.Component {
+	  constructor(props) {
+	    super(props);
+	    this.state = { value: '' };
+	    this.handleChange = this.handleChange.bind(this);
+	    this.handleSubmit = this.handleSubmit.bind(this);
+	  }
 
-	ReactDOM.render(React.createElement(Form, null), document.getElementById('app'));
+	  handleChange(event) {
+	    // Note: with uncontrolled inputs, you don't
+	    // have to put the value in the state.
+	    this.setState({ value: event.target.value });
+	  }
+
+	  handleSubmit(event) {
+	    alert('Text field value is: ' + this.state.value);
+	  }
+
+	  render() {
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement("input", {
+	        type: "text",
+	        placeholder: "Hello!",
+	        onChange: this.handleChange }),
+	      '\n',
+	      React.createElement("input", {
+	        type: "text",
+	        placeholder: "Hello!",
+	        onChange: this.handleChange }),
+	      '\n',
+	      React.createElement("input", {
+	        type: "text",
+	        placeholder: "Hello!",
+	        onChange: this.handleChange }),
+	      '\n',
+	      React.createElement("input", {
+	        type: "text",
+	        placeholder: "Hello!",
+	        onChange: this.handleChange }),
+	      '\n',
+	      React.createElement("input", {
+	        type: "text",
+	        placeholder: "Hello!",
+	        onChange: this.handleChange }),
+	      React.createElement(
+	        "button",
+	        { onClick: this.handleSubmit },
+	        "Submit"
+	      )
+	    );
+	  }
+	}
+
+	ReactDOM.render(React.createElement(CommentBox, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */

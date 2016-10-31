@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 var React = require("react");
 var ReactDOM = require("react-dom");
 var app = document.getElementById("app");
@@ -40,4 +41,4 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
-module.exports= Form;
+export default Form;
