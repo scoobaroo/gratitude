@@ -2,13 +2,34 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 var app = document.getElementById("app");
+var stormpath = require('express-stormpath');
+var ReactStormpath = require('react-stormpath').default;
+var AuthenticatedRoute = require('react-stormpath').AuthenticatedRoute;
+var LoginLink = require('react-stormpath').LoginLink;
+
+import { Router } from 'react-stormpath';
+import { Route, browserHistory } from 'react-router';
 
 console.log("app.js loaded");
+
+<Route path='/register' component={RegistrationPage} />
+<LoginRoute path='/login' component={LoginPage} />
+<AuthenticatedRoute path='/protected' component={ProtectedPage} />
+<HomeRoute path='/' component={HomePage} />
+<AuthenticatedRoute>
+  <HomeRoute path='/profile' component={ProfilePage} />
+</AuthenticatedRoute>
 
 var CommentBox = React.createClass({
   render: function() {
     return (
       <div className="commentBox">
+        <NotAuthenticated>
+          <LoginLink>Login</LoginLink>
+        </NotAuthenticated>
+        <Authenticated>
+          <LogoutLink>Logout</LogoutLink>
+        </Authenticated>
         <h1>Gratitude List</h1>
         Hello, world! I am a CommentBox.
         <Form />
@@ -75,6 +96,7 @@ class Form extends React.Component {
   }
 }
 
+ReactStormpath.init();
 ReactDOM.render(
   <CommentBox />,
   document.getElementById('app')
