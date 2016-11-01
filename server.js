@@ -1,5 +1,7 @@
 //Lets load the mongoose module in our program
 var mongoose = require('mongoose');
+var db = require('./models');
+var bodyParser = require('body-parser');
 var stormpath = require('express-stormpath');
 var webpack = require('webpack');
 var config = require('./webpack.config');
@@ -13,9 +15,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
-// SERVER-SIDE JAVASCRIPT
-var db = require('./models');
-var bodyParser = require('body-parser');
 app.use(express.static(__dirname + '/src'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/vendor', express.static(__dirname + '/bower_components'));
@@ -32,6 +31,46 @@ app.use(stormpath.init(app, {
     produces: ['application/json']
   }
 }));
+
+app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
+  function writeError(message) {
+    res.status(400);
+    res.json({ message: message, status: 400 });
+    res.end();
+  }
+
+  function saveAccount () {
+    req.user.givenName = req.body.givenName;
+    req.user.surname = req.body.surname;
+    req.user.email = req.body.email;
+
+    req.user.save(function (err) {
+      if (err) {
+        return writeError(err.userMessage || err.message);
+      }
+      res.end();
+    });
+  }
+
+  if (req.body.password) {
+    var application = req.app.get('stormpathApplication');
+
+    application.authenticateAccount({
+      username: req.user.username,
+      password: req.body.existingPassword
+    }, function (err) {
+      if (err) {
+        return writeError('The existing password that you entered was incorrect.');
+      }
+
+      req.user.password = req.body.password;
+
+      saveAccount();
+    });
+  } else {
+    saveAccount();
+  }
+});
 
 app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.min.css'));

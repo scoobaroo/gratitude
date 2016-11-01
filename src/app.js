@@ -2,13 +2,30 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 var app = document.getElementById("app");
-var stormpath = require('express-stormpath');
+
 var ReactStormpath = require('react-stormpath').default;
 var AuthenticatedRoute = require('react-stormpath').AuthenticatedRoute;
 var LoginLink = require('react-stormpath').LoginLink;
 
+import ReactStormpath, { Router, HomeRoute, LoginRoute, AuthenticatedRoute } from 'react-stormpath';
 import { Router } from 'react-stormpath';
-import { Route, browserHistory } from 'react-router';
+import { IndexRoute, Route, browserHistory } from 'react-router';
+import { MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
+
+ReactStormpath.init();
+ReactDOM.render(
+  <Router history={browserHistory}>
+   <HomeRoute path='/' component={MasterPage}>
+     <IndexRoute component={IndexPage} />
+     <LoginRoute path='/login' component={LoginPage} />
+     <Route path='/register' component={RegistrationPage} />
+     <AuthenticatedRoute>
+      <HomeRoute path='/profile' component={ProfilePage} />
+    </AuthenticatedRoute>
+   </HomeRoute>
+  </Router>,
+  document.getElementById('app')
+);
 
 console.log("app.js loaded");
 
