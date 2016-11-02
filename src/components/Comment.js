@@ -3,10 +3,10 @@ import React, { PropTypes } from 'react';
 import { LoginLink } from 'react-stormpath';
 import ListForm from './ListForm'
 
-export default class CommentBox extends React.Component{
-  render: function() {
+export default class Comment extends React.Component{
+  render() {
     return (
-      <div className="commentBox">
+      <div className="comment">
         <NotAuthenticated>
           <LoginLink>Login</LoginLink>
         </NotAuthenticated>
