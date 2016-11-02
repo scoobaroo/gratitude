@@ -1,7 +1,6 @@
-/* jshint esversion: 6 */
-var React = require("react");
-var ReactDOM = require("react-dom");
-var app = document.getElementById("app");
+import { Link } from 'react-router';
+import React, { PropTypes } from 'react';
+import { LoginLink } from 'react-stormpath';
 
 class Form extends React.Component {
   constructor(props) {

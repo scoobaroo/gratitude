@@ -1,120 +1,43 @@
 /* jshint esversion: 6 */
-var React = require("react");
-var ReactDOM = require("react-dom");
-var app = document.getElementById("app");
-
 var ReactStormpath = require('react-stormpath').default;
 var AuthenticatedRoute = require('react-stormpath').AuthenticatedRoute;
 var LoginLink = require('react-stormpath').LoginLink;
 
+import { Link } from 'react-router';
+import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { LoginLink } from 'react-stormpath';
+
 import ReactStormpath, { Router, HomeRoute, LoginRoute, AuthenticatedRoute } from 'react-stormpath';
-import { Router } from 'react-stormpath';
 import { IndexRoute, Route, browserHistory } from 'react-router';
 import { MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
+
+import ListForm from './components/ListForm';
+import index from './pages/index';
+
+console.log("app.js loaded");
 
 ReactStormpath.init();
 ReactDOM.render(
   <Router history={browserHistory}>
-   <HomeRoute path='/' component={MasterPage}>
-     <IndexRoute component={IndexPage} />
-     <LoginRoute path='/login' component={LoginPage} />
-     <Route path='/register' component={RegistrationPage} />
-     <AuthenticatedRoute>
-      <HomeRoute path='/profile' component={ProfilePage} />
-    </AuthenticatedRoute>
-   </HomeRoute>
+    <HomeRoute path='/' component={MasterPage}>
+      <IndexRoute component={IndexPage} />
+      <LoginRoute path='/login' component={LoginPage} />
+      <Route path='/register' component={RegistrationPage} />
+      <AuthenticatedRoute>
+        <HomeRoute path='/profile' component={ProfilePage} />
+        <Route path='/:user/lists' component={Lists} />
+      </AuthenticatedRoute>
+      <Route path='/lists' component={Lists} >
+        <Route path="/lists/:list" component={List} />
+      </Route>
+    </HomeRoute>
   </Router>,
   document.getElementById('app')
 );
 
-console.log("app.js loaded");
-
-<Route path='/register' component={RegistrationPage} />
-<LoginRoute path='/login' component={LoginPage} />
-<AuthenticatedRoute path='/protected' component={ProtectedPage} />
-<HomeRoute path='/' component={HomePage} />
-<AuthenticatedRoute>
-  <HomeRoute path='/profile' component={ProfilePage} />
-</AuthenticatedRoute>
-
-var CommentBox = React.createClass({
-  render: function() {
-    return (
-      <div className="commentBox">
-        <NotAuthenticated>
-          <LoginLink>Login</LoginLink>
-        </NotAuthenticated>
-        <Authenticated>
-          <LogoutLink>Logout</LogoutLink>
-        </Authenticated>
-        <h1>Gratitude List</h1>
-        Hello, world! I am a CommentBox.
-        <Form />
-      </div>
-    );
-  }
-});
-
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value1: '', value2: '', value3:'', value4 : '', value5:''};
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    // Note: with uncontrolled inputs, you don't
-    // have to put the value in the state.
-    this.setState({value1: event.target.value1,
-                   value2: event.target.value2,
-                   value3: event.target.value3,
-                   value4: event.target.value4,
-                   value5: event.target.value5
-                 });
-  }
-
-  handleSubmit(event) {
-    alert('Text field value1 is: ' + this.state.value1 +
-          'Text field value2 is: ' + this.state.value2 +
-          'Text field value3 is: ' + this.state.value3 +
-          'Text field value4 is: ' + this.state.value4 +
-          'Text field value5 is: ' + this.state.value5);
-  }
-
-  render() {
-    return (
-      <div>
-        <input
-          type="text"
-          placeholder="Gratitude List Item 1!"
-          onChange={this.handleChange} />
-        <input
-          type="text"
-          placeholder="Gratitude List Item 2!"
-          onChange={this.handleChange} />
-        <input
-          type="text"
-          placeholder="Gratitude List Item 3!"
-          onChange={this.handleChange} />
-        <input
-          type="text"
-          placeholder="Gratitude List Item 4!"
-          onChange={this.handleChange} />
-        <input
-          type="text"
-          placeholder="Gratitude List Item 5!"
-          onChange={this.handleChange} />
-        <button onClick={this.handleSubmit}>
-          Submit
-        </button>
-      </div>
-    );
-  }
-}
-
 ReactStormpath.init();
 ReactDOM.render(
-  <CommentBox />,
+  <ListForm />,
   document.getElementById('app')
 );
