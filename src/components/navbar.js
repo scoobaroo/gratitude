@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
+import Index from './components/Index'
+import index from './pages/index'
 
 class Navbar extends React.Component {
   constructor(props) {

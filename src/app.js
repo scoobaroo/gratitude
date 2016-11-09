@@ -30,8 +30,3 @@ ReactDOM.render(
   </Router>,
   document.getElementById('app')
 );
-
-ReactDOM.render(
-  <ListForm />,
-  document.getElementById('app')
-);

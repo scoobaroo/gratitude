@@ -4,6 +4,8 @@ import { LoginLink } from 'react-stormpath';
 import DocumentTitle from 'react-document-title';
 
 import Header from './Header';
+import Index from './components/Index'
+import index from './pages/index'
 
 export default class is extends React.Component {
   render() {

@@ -1,6 +1,8 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
 import { RegistrationForm } from 'react-stormpath';
+import Index from './components/Index'
+import index from './pages/index'
 
 export default class RegistrationPage extends React.Component {
   render() {

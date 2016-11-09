@@ -1,6 +1,8 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
 import { UserProfileForm } from 'react-stormpath';
+import Index from './components/Index'
+import index from './pages/index'
 
 export default class ProfilePage extends React.Component {
   render() {
